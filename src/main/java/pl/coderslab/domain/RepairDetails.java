@@ -9,7 +9,9 @@ public class RepairDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @Column(name="date_start_repair")
     private LocalDateTime dateStartRepair;
+    @Column(name="date_end_repair")
     private LocalDateTime dateEndRepair;
     private String descriptionOfRepair;
     private int status;

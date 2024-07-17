@@ -4,23 +4,23 @@ import javax.persistence.*;
 
 @Entity
 @Table(name = "computers")
-public class Computers {
+public class Computer {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @ManyToOne
-    private Clients clients;
+    private User client;
     private String type;
     private String brand;
     private String model;
     private int serial_number;
 
-    public Computers() {
+    public Computer() {
     }
 
-    public Computers(Long id, Clients clients, String type, String brand, String model, int serial_number) {
+    public Computer(Long id, User client, String type, String brand, String model, int serial_number) {
         this.id = id;
-        this.clients = clients;
+        this.client = client;
         this.type = type;
         this.brand = brand;
         this.model = model;
@@ -35,12 +35,12 @@ public class Computers {
         this.id = id;
     }
 
-    public Clients getClients() {
-        return clients;
+    public User getClient() {
+        return client;
     }
 
-    public void setClients(Clients clients) {
-        this.clients = clients;
+    public void setClient(User client) {
+        this.client = client;
     }
 
     public String getType() {

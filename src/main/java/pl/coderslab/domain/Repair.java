@@ -2,34 +2,40 @@ package pl.coderslab.domain;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
-import java.util.HashSet;
-import java.util.Set;
 
 @Entity
 @Table(name = "repairs")
-public class Repairs {
+public class Repair {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     @ManyToOne
-    private Clients clients;
-    @ManyToMany(fetch = FetchType.EAGER)
-    @JoinTable(name = "employees_repairs",
-            joinColumns = {@JoinColumn(name = "computers_id")},
-            inverseJoinColumns = {@JoinColumn(name = "employees_id")})
-    private Set<Employees> employees = new HashSet<>();
+    @JoinColumn(name = "client_id")
+    private User client;
+
+    @OneToOne
+    private Computer computer;
+
+
+    @ManyToOne
+    @JoinColumn(name = "employee_id")
+    private User employee;
+
+    @Column(name = "date_of_order")
     private LocalDateTime dateOfOrder;
     private String descriptionOfTheProblem;
     @OneToOne
     private RepairDetails repairDetails;
 
-    public Repairs() {
+    public Repair() {
     }
 
-    public Repairs(Long id, Clients clients, Set<Employees> employees, LocalDateTime dateOfOrder, String descriptionOfTheProblem, RepairDetails repairDetails) {
+    public Repair(Long id, User client, Computer computer, User employee, LocalDateTime dateOfOrder, String descriptionOfTheProblem, RepairDetails repairDetails) {
         this.id = id;
-        this.clients = clients;
-        this.employees = employees;
+        this.client = client;
+        this.computer = computer;
+        this.employee = employee;
         this.dateOfOrder = dateOfOrder;
         this.descriptionOfTheProblem = descriptionOfTheProblem;
         this.repairDetails = repairDetails;
@@ -43,20 +49,28 @@ public class Repairs {
         this.id = id;
     }
 
-    public Clients getClients() {
-        return clients;
+    public User getClient() {
+        return client;
     }
 
-    public void setClients(Clients clients) {
-        this.clients = clients;
+    public void setClient(User client) {
+        this.client = client;
     }
 
-    public Set<Employees> getEmployees() {
-        return employees;
+    public Computer getComputer() {
+        return computer;
     }
 
-    public void setEmployees(Set<Employees> employees) {
-        this.employees = employees;
+    public void setComputer(Computer computer) {
+        this.computer = computer;
+    }
+
+    public User getEmployee() {
+        return employee;
+    }
+
+    public void setEmployee(User employee) {
+        this.employee = employee;
     }
 
     public LocalDateTime getDateOfOrder() {

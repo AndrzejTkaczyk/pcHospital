@@ -1,10 +1,11 @@
 package pl.coderslab.domain;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "clients")
-public class Clients {
+@Table(name = "users")
+public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -12,18 +13,29 @@ public class Clients {
     private String lastName;
     private String email;
     private String password;
-    private int phone;
+    private String address;
+    private byte phone;
+    @Column(name = "created_on")
+    private LocalDateTime createdOn;
+    private byte access;
+    @OneToOne
+    private Role role;
 
-    public Clients() {
+    public User() {
+
     }
 
-    public Clients(Long id, String firstName, String lastName, String email, String password, int phone) {
+    public User(Long id, String firstName, String lastName, String email, String password, String address, byte phone, LocalDateTime createdOn, byte access, Role role) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
         this.password = password;
+        this.address = address;
         this.phone = phone;
+        this.createdOn = createdOn;
+        this.access = access;
+        this.role = role;
     }
 
     public Long getId() {
@@ -66,11 +78,45 @@ public class Clients {
         this.password = password;
     }
 
-    public int getPhone() {
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public byte getPhone() {
         return phone;
     }
 
-    public void setPhone(int phone) {
+    public void setPhone(byte phone) {
         this.phone = phone;
     }
+
+    public LocalDateTime getCreatedOn() {
+        return createdOn;
+    }
+
+    public void setCreatedOn(LocalDateTime createdOn) {
+        this.createdOn = createdOn;
+    }
+
+    public byte getAccess() {
+        return access;
+    }
+
+    public void setAccess(byte access) {
+        this.access = access;
+    }
+
+    public Role getRole() {
+        return role;
+    }
+
+    public void setRole(Role role) {
+        this.role = role;
+    }
 }
+
+
