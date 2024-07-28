@@ -74,4 +74,8 @@ public class Computer {
     public void setSerial_number(int serial_number) {
         this.serial_number = serial_number;
     }
+
+    public String getDetailComputer() {
+        return brand + " - " + model + " - " + type;
+    }
 }

@@ -1,6 +1,12 @@
 package pl.coderslab.domain;
 
+import org.hibernate.validator.constraints.Range;
+
 import javax.persistence.*;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
 import java.time.LocalDateTime;
 
 @Entity
@@ -9,12 +15,20 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @NotBlank
+    @Size(min = 2, max = 100)
     private String firstName;
+    @NotBlank
+    @Size(min = 2, max = 100)
     private String lastName;
+    @NotBlank
+//    @Email
     private String email;
+    @NotBlank
     private String password;
+    @NotBlank
     private String address;
-    private byte phone;
+    private int phone;
     @Column(name = "created_on")
     private LocalDateTime createdOn;
     private byte access;
@@ -22,10 +36,9 @@ public class User {
     private Role role;
 
     public User() {
-
     }
 
-    public User(Long id, String firstName, String lastName, String email, String password, String address, byte phone, LocalDateTime createdOn, byte access, Role role) {
+    public User(Long id, String firstName, String lastName, String email, String password, String address, int phone, LocalDateTime createdOn, byte access, Role role) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -36,6 +49,10 @@ public class User {
         this.createdOn = createdOn;
         this.access = access;
         this.role = role;
+    }
+
+    public String getFirstNameAndLastName () {
+        return firstName + " " + lastName;
     }
 
     public Long getId() {
@@ -86,11 +103,11 @@ public class User {
         this.address = address;
     }
 
-    public byte getPhone() {
+    public int getPhone() {
         return phone;
     }
 
-    public void setPhone(byte phone) {
+    public void setPhone(int phone) {
         this.phone = phone;
     }
 
@@ -117,6 +134,23 @@ public class User {
     public void setRole(Role role) {
         this.role = role;
     }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", email='" + email + '\'' +
+                ", password='" + password + '\'' +
+                ", address='" + address + '\'' +
+                ", phone=" + phone +
+                ", createdOn=" + createdOn +
+                ", access=" + access +
+                ", role=" + role +
+                '}';
+    }
 }
+
 
 

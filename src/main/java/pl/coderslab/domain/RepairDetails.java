@@ -1,6 +1,9 @@
 package pl.coderslab.domain;
 
+import org.hibernate.annotations.Cascade;
+
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
 import java.time.LocalDateTime;
 
 @Entity
@@ -9,24 +12,25 @@ public class RepairDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Column(name="date_start_repair")
-    private LocalDateTime dateStartRepair;
-    @Column(name="date_end_repair")
-    private LocalDateTime dateEndRepair;
+    @OneToOne
+    private User employee;
+    @NotBlank
     private String descriptionOfRepair;
     private int status;
     private double price;
+    @ManyToOne
+    private Repair repair;
 
     public RepairDetails() {
     }
 
-    public RepairDetails(Long id, LocalDateTime dateStartRepair, LocalDateTime dateEndRepair, String descriptionOfRepair, int status, double price) {
+    public RepairDetails(Long id, User employee, String descriptionOfRepair, int status, double price, Repair repair) {
         this.id = id;
-        this.dateStartRepair = dateStartRepair;
-        this.dateEndRepair = dateEndRepair;
+        this.employee = employee;
         this.descriptionOfRepair = descriptionOfRepair;
         this.status = status;
         this.price = price;
+        this.repair = repair;
     }
 
     public Long getId() {
@@ -37,20 +41,12 @@ public class RepairDetails {
         this.id = id;
     }
 
-    public LocalDateTime getDateStartRepair() {
-        return dateStartRepair;
+    public User getEmployee() {
+        return employee;
     }
 
-    public void setDateStartRepair(LocalDateTime dateStartRepair) {
-        this.dateStartRepair = dateStartRepair;
-    }
-
-    public LocalDateTime getDateEndRepair() {
-        return dateEndRepair;
-    }
-
-    public void setDateEndRepair(LocalDateTime dateEndRepair) {
-        this.dateEndRepair = dateEndRepair;
+    public void setEmployee(User employee) {
+        this.employee = employee;
     }
 
     public String getDescriptionOfRepair() {
@@ -75,5 +71,13 @@ public class RepairDetails {
 
     public void setPrice(double price) {
         this.price = price;
+    }
+
+    public Repair getRepair() {
+        return repair;
+    }
+
+    public void setRepair(Repair repair) {
+        this.repair = repair;
     }
 }

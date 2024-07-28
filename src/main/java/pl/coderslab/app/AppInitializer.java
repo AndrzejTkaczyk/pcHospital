@@ -4,6 +4,7 @@ import org.springframework.web.WebApplicationInitializer;
 import org.springframework.web.context.support.AnnotationConfigWebApplicationContext;
 import org.springframework.web.filter.CharacterEncodingFilter;
 import org.springframework.web.servlet.DispatcherServlet;
+import pl.coderslab.filters.AutorisationFilter;
 
 import javax.servlet.FilterRegistration;
 import javax.servlet.ServletContext;
@@ -24,5 +25,12 @@ public class AppInitializer implements WebApplicationInitializer {
         fr.setInitParameter("encoding", "UTF-8");
         fr.setInitParameter("forceEncoding", "true");
         fr.addMappingForUrlPatterns(null, true, "/*");
+
+        //zasoby statyczne
+        servletContext.setInitParameter("spring.resources.static-locations", "/html/**");
+
+        //filtr uzytkownikow
+        FilterRegistration.Dynamic autorisationFilter = servletContext.addFilter("autorisationFilter", new AutorisationFilter());
+        autorisationFilter.addMappingForUrlPatterns(null, false, "/*");
     }
 }

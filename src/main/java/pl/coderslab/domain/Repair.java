@@ -2,6 +2,10 @@ package pl.coderslab.domain;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "repairs")
@@ -17,27 +21,33 @@ public class Repair {
     @OneToOne
     private Computer computer;
 
-
-    @ManyToOne
-    @JoinColumn(name = "employee_id")
-    private User employee;
+//    @ManyToOne
+//    @JoinColumn(name = "employee_id")
+//    private User employee;
 
     @Column(name = "date_of_order")
     private LocalDateTime dateOfOrder;
+
     private String descriptionOfTheProblem;
-    @OneToOne
-    private RepairDetails repairDetails;
+    private int status;
+
+    @Column(name = "date_of_end")
+    private LocalDateTime dateOfEnd;
+
+    @OneToMany(mappedBy = "repair")
+    private Set<RepairDetails> repairDetails = new HashSet<>();
 
     public Repair() {
     }
 
-    public Repair(Long id, User client, Computer computer, User employee, LocalDateTime dateOfOrder, String descriptionOfTheProblem, RepairDetails repairDetails) {
+    public Repair(Long id, User client, Computer computer, LocalDateTime dateOfOrder, String descriptionOfTheProblem, int status, LocalDateTime dateOfEnd, Set<RepairDetails> repairDetails) {
         this.id = id;
         this.client = client;
         this.computer = computer;
-        this.employee = employee;
         this.dateOfOrder = dateOfOrder;
         this.descriptionOfTheProblem = descriptionOfTheProblem;
+        this.status = status;
+        this.dateOfEnd = dateOfEnd;
         this.repairDetails = repairDetails;
     }
 
@@ -65,14 +75,6 @@ public class Repair {
         this.computer = computer;
     }
 
-    public User getEmployee() {
-        return employee;
-    }
-
-    public void setEmployee(User employee) {
-        this.employee = employee;
-    }
-
     public LocalDateTime getDateOfOrder() {
         return dateOfOrder;
     }
@@ -89,11 +91,27 @@ public class Repair {
         this.descriptionOfTheProblem = descriptionOfTheProblem;
     }
 
-    public RepairDetails getRepairDetails() {
+    public int getStatus() {
+        return status;
+    }
+
+    public void setStatus(int status) {
+        this.status = status;
+    }
+
+    public LocalDateTime getDateOfEnd() {
+        return dateOfEnd;
+    }
+
+    public void setDateOfEnd(LocalDateTime dateOfEnd) {
+        this.dateOfEnd = dateOfEnd;
+    }
+
+    public Set<RepairDetails> getRepairDetails() {
         return repairDetails;
     }
 
-    public void setRepairDetails(RepairDetails repairDetails) {
+    public void setRepairDetails(Set<RepairDetails> repairDetails) {
         this.repairDetails = repairDetails;
     }
 }

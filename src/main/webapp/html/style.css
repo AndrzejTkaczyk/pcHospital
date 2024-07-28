@@ -3,15 +3,17 @@ body {
 }
 
 table.mainTable {
+    border: 2px solid black;
     border-collapse: collapse;
-    width:80%;
+    width: 80%;
     text-align: center;
-    margin-left:auto;
-    margin-right:auto;
+    margin-left: auto;
+    margin-right: auto;
     background-color: white;
 }
+
 table.mainTable a {
-    background-color: #f44336;
+    background-color: #0d00ff;
     color: white;
     padding: 14px 25px;
     text-align: center;
@@ -22,4 +24,59 @@ table.mainTable a {
 table.mainTable a:hover, a:active {
     background-color: green;
     color: white;
+}
+
+table.mainTableSmall {
+    border: 2px solid black;
+    border-collapse: collapse;
+    width: 80%;
+    text-align: right;
+    margin-left: auto;
+    margin-right: auto;
+    background-color: white;
+}
+
+table.mainTableSmall a {
+    background-color: #f44336;
+    color: white;
+    padding: 5px 5px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+}
+
+table.mainTableSmall a:hover, a:active {
+    background-color: green;
+    color: white;
+}
+
+table.List {
+    border: 2px solid black;
+    border-collapse: collapse;
+    width: 80%;
+    text-align: center;
+    margin-left: auto;
+    margin-right: auto;
+    background-color: white;
+}
+
+table.List a {
+    background-color: #f44336;
+    color: white;
+    padding: 5px 5px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+}
+
+table.List a:hover, a:active {
+    background-color: green;
+    color: white;
+}
+
+
+.alert-danger {
+    color: #721c24;
+    background-color: #f8d7da;
+    border-color: #f5c6cb
 }
