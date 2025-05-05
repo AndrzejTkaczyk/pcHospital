@@ -3,7 +3,6 @@ package pl.coderslab.app;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.format.FormatterRegistry;
 import org.springframework.http.MediaType;
 import org.springframework.http.converter.HttpMessageConverter;
@@ -22,13 +21,13 @@ import org.springframework.web.servlet.view.InternalResourceViewResolver;
 import pl.coderslab.converter.ComputerConverter;
 import pl.coderslab.converter.RepairDetailsConverter;
 import pl.coderslab.converter.UserConverter;
-import pl.coderslab.domain.User;
 
 import javax.persistence.EntityManagerFactory;
 import javax.validation.Validator;
 import java.nio.charset.StandardCharsets;
 import java.util.List;
 import java.util.Locale;
+
 
 @Configuration
 @EnableWebMvc
