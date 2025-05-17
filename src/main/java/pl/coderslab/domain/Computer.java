@@ -14,17 +14,24 @@ public class Computer {
     private String brand;
     private String model;
     private int serial_number;
+    private int status;
 
-    public Computer() {
+    public Computer(int status) {
+        this.status = status;
     }
 
-    public Computer(Long id, User client, String type, String brand, String model, int serial_number) {
+    public Computer(Long id, User client, String type, String brand, String model, int serial_number, int status) {
         this.id = id;
         this.client = client;
         this.type = type;
         this.brand = brand;
         this.model = model;
         this.serial_number = serial_number;
+        this.status = status;
+    }
+
+    public Computer() {
+
     }
 
     public Long getId() {
@@ -73,6 +80,14 @@ public class Computer {
 
     public void setSerial_number(int serial_number) {
         this.serial_number = serial_number;
+    }
+
+    public int getStatus() {
+        return status;
+    }
+
+    public void setStatus(int status) {
+        this.status = status;
     }
 
     public String getDetailComputer() {

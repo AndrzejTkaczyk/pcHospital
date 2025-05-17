@@ -34,9 +34,10 @@ public class ComputerDao {
         return entityManager.createQuery("SELECT c FROM Computer c", Computer.class).getResultList();
     }
 
-    public List<Computer> findUserComputer(long id) {
+    public List<Computer> findUserComputers(long id) {
         return entityManager.createQuery("SELECT c FROM Computer c WHERE c.client.id= ?1", Computer.class)
                 .setParameter(1, id)
                 .getResultList();
     }
+
 }

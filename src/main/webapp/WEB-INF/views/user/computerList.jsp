@@ -44,15 +44,21 @@
                                 <td>${c.serial_number}</td>
                                 <td>${c.type}</td>
                                 <td>
-                                    <c:choose>
-                                        <c:when test="${empty repair}">
+                                    <c:forEach items="${repairs}" var="r" varStatus="repairLoop">
+                                        <c:if test="${c.id != r.computer.id}">
                                             <a href="/app/user/computerEdit/${c.id}">Edytuj</a>
                                             <a href="/app/user/computerDelete/${c.id}">Usuń</a>
-                                        </c:when>
-                                        <c:otherwise>
-                                            Brak
-                                        </c:otherwise>
-                                    </c:choose>
+                                        </c:if>
+                                        <c:if test="${c.id == r.computer.id && r.status==1}">
+                                            <a href="/app/user/computerEdit/${c.id}">Edytuj</a>
+                                            <a href="/app/user/computerDelete/${c.id}">Usuń</a>
+                                            Oczekuje na przyjęcie naprawy.
+                                        </c:if>
+                                        <c:if test="${c.id == r.computer.id && r.status==2}">
+                                            Przyjęty do naprawy.
+                                        </c:if>
+
+                                    </c:forEach>
                                 </td>
                             </tr>
                         </c:forEach>

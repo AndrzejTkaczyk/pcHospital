@@ -19,6 +19,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import org.springframework.web.servlet.i18n.SessionLocaleResolver;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 import pl.coderslab.converter.ComputerConverter;
+import pl.coderslab.converter.RepairConverter;
 import pl.coderslab.converter.RepairDetailsConverter;
 import pl.coderslab.converter.UserConverter;
 
@@ -93,6 +94,11 @@ public class AppConfig implements WebMvcConfigurer {
     @Bean
     public RepairDetailsConverter repairDetailsConverter() {
         return new RepairDetailsConverter();
+    }
+
+    @Bean
+    public RepairConverter repairConverter() {
+        return new RepairConverter();
     }
 
     @Override

@@ -6,7 +6,6 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import pl.coderslab.dao.ComputerDao;
 import pl.coderslab.dao.RepairDao;
-import pl.coderslab.dao.RepairDetailsDao;
 import pl.coderslab.domain.Computer;
 import pl.coderslab.domain.User;
 
@@ -32,10 +31,12 @@ public class ComputerController {
 
     @GetMapping("/user/computerList")
     public String userComputerList(Model model, HttpSession session) {
-        model.addAttribute("repair", repairDao.findUserRepair(((User) session.getAttribute("user")).getId()));
-        model.addAttribute("computers", computerDao.findUserComputer(((User) session.getAttribute("user")).getId()));
+        model.addAttribute("repairs", repairDao.findUserRepairs(((User) session.getAttribute("user")).getId()));
+        model.addAttribute("computers", computerDao.findUserComputers(((User) session.getAttribute("user")).getId()));
         return "user/computerList";
     }
+
+    /*  tutaj */
 
     @GetMapping("/user/computerAdd")
     public String userComputerAdd(Model model) {
@@ -68,6 +69,13 @@ public class ComputerController {
     @GetMapping("/user/computerDelete/{id}")
     public String userComputerDelete(@PathVariable long id) {
         computerDao.deleteComputer(computerDao.findById(id));
+        return "redirect:/app/user/computerList";
+    }
+
+    @GetMapping("/user/computerAndRepairDelete/{rId}/{cId}")
+    public String userComputerAndRepairDelete(@PathVariable long cId, @PathVariable long rId) {
+        repairDao.deleteRepair(repairDao.findById(rId));
+        computerDao.deleteComputer(computerDao.findById(cId));
         return "redirect:/app/user/computerList";
     }
 }

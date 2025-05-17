@@ -106,8 +106,8 @@ public class RepairController {
 
     @GetMapping("/user/repairList")
     public String userRepairList(Model model, HttpSession session) {
-        model.addAttribute("repairs", repairDao.findUserRepair(((User) session.getAttribute("user")).getId()));
-        model.addAttribute("computers", computerDao.findUserComputer(((User) session.getAttribute("user")).getId()));
+        model.addAttribute("repairs", repairDao.findUserRepairs(((User) session.getAttribute("user")).getId()));
+        model.addAttribute("computers", computerDao.findUserComputers(((User) session.getAttribute("user")).getId()));
         return "user/repairList";
     }
 
@@ -120,7 +120,7 @@ public class RepairController {
     @GetMapping("/user/repairAdd")
     public String userRepairAdd(Model model, HttpSession session) {
         model.addAttribute("repair", new Repair());
-        model.addAttribute("computers", computerDao.findUserComputer(((User) session.getAttribute("user")).getId()));
+        model.addAttribute("computers", computerDao.findUserComputers(((User) session.getAttribute("user")).getId()));
         return "user/repairAdd";
     }
 
@@ -136,6 +136,7 @@ public class RepairController {
             User client = (User) session.getAttribute("user");
             repair.setClient(client);
             repair.setDateOfOrder(LocalDateTime.now());
+            repair.setStatus(1);
             repairDao.saveRepair(repair);
         }
         return "redirect:/app/user/repairList";

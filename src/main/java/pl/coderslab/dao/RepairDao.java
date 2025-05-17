@@ -2,6 +2,7 @@ package pl.coderslab.dao;
 
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
+import pl.coderslab.domain.Computer;
 import pl.coderslab.domain.Repair;
 
 import javax.persistence.EntityManager;
@@ -30,19 +31,19 @@ public class RepairDao {
         return entityManager.find(Repair.class, id);
     }
 
-    public Repair findUserOneRepair(long id) {
-        return entityManager.createQuery("SELECT r FROM Repair r WHERE r.client.id= ?1", Repair.class)
-                .setParameter(1, id)
-                .getSingleResult();
-    }
-
     public List<Repair> findAll() {
         return entityManager.createQuery("SELECT r FROM Repair r", Repair.class).getResultList();
     }
 
-    public List<Repair> findUserRepair(long id) {
+    public List<Repair> findUserRepairs(long id) {
         return entityManager.createQuery("SELECT r FROM Repair r WHERE r.client.id= ?1", Repair.class)
                 .setParameter(1, id)
                 .getResultList();
+    }
+
+    public int findRepairStatusByComputerId(long id) {
+        return entityManager.createQuery("SELECT r.status FROM Repair r WHERE r.computer.id= ?1 AND r.status==2", Repair.class)
+                .setParameter(1, id)
+                .getFirstResult();
     }
 }

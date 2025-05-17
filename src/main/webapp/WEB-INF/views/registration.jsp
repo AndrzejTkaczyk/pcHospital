@@ -7,18 +7,41 @@
 
 <head>
     <meta charset="utf-8">
-    <title>pcHospital - Rejestracja</title>
+    <c:choose>
+        <c:when test="${user.id == null}">
+            <title>Rejestracja</title>
+        </c:when>
+        <c:otherwise>
+            <title>Edytuj konto</title>
+        </c:otherwise>
+    </c:choose>
     <link href='<c:url value="/html/style.css"/>' rel="stylesheet" type="text/css">
 </head>
 
 <body>
 
-<%@ include file="header.jsp" %>
+<c:choose>
+    <c:when test="${user.id == null}">
+        <%@ include file="header.jsp" %>
+    </c:when>
+    <c:otherwise>
+        <%@ include file="user/header.jsp" %>
+    </c:otherwise>
+</c:choose>
 
 <table class="mainTable">
     <tr>
         <td>
-            <h1>Rejestracja</h1>
+
+            <c:choose>
+                <c:when test="${user.id == null}">
+                    <h1>Rejestracja</h1>
+                </c:when>
+                <c:otherwise>
+                    <h1>Edycja konta</h1>
+                </c:otherwise>
+            </c:choose>
+
             <form:form modelAttribute="user" method="post" action="/registration">
                 <form:hidden path="id"/>
                 <form:hidden path="createdOn"/>
@@ -50,7 +73,15 @@
                     Adres: <br><form:input path="address"/>
                     <p class="alert-danger"><form:errors path="address"/></p>
                 </label>
-                <br><form:button>Zarejestruj</form:button>
+                <c:choose>
+                    <c:when test="${user.id == null}">
+                        <br><form:button>Zarejestruj</form:button>
+                    </c:when>
+                    <c:otherwise>
+                        <br><form:button>Zapisz</form:button>
+                    </c:otherwise>
+                </c:choose>
+
             </form:form>
         </td>
     </tr>

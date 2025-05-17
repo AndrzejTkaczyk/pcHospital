@@ -34,10 +34,10 @@
                 </c:otherwise>
             </c:choose>
             <form:form modelAttribute="computer" method="post" action="/app/user/computerAdd">
-            <form:hidden path="id"/>
-            <c:if test="${computer.client != null}">
-            <form:hidden path="client.id"/>
-            </c:if>
+                <form:hidden path="id"/>
+                <c:if test="${computer.client != null}">
+                    <form:hidden path="client.id"/>
+                </c:if>
                 <label>
                     Marka:<br><form:input type="text" path="brand"/>
                     <p class="alert-danger"><form:errors path="brand"/></p>
@@ -56,7 +56,7 @@
                 </label>
                 <br>
                 <button type="submit">Zapisz</button>
-                </form:form>
+            </form:form>
         </td>
     </tr>
 </table>

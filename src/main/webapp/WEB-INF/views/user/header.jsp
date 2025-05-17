@@ -23,8 +23,8 @@
     <tr>
         <td>
             <c:if test="${sessionScope.user.access == 0}">
-            <a href="<c:url value="/app/user/computerList"/>">Twoje komputery</a>
-            <a href="<c:url value="/app/user/repairList"/>">Twoje naprawy</a>
+                <a href="<c:url value="/app/user/computerList"/>">Twoje komputery</a>
+                <a href="<c:url value="/app/user/repairList"/>">Twoje naprawy</a>
             </c:if>
             <c:if test="${sessionScope.user.access == 1}">
                 <a href="<c:url value="/app/employee/repairsEmployee"/>">Twoje naprawy</a>
