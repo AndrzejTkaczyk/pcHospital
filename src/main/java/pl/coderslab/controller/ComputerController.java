@@ -7,10 +7,12 @@ import org.springframework.web.bind.annotation.*;
 import pl.coderslab.dao.ComputerDao;
 import pl.coderslab.dao.RepairDao;
 import pl.coderslab.domain.Computer;
+import pl.coderslab.domain.Repair;
 import pl.coderslab.domain.User;
 
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
+import java.util.List;
 
 @Controller
 @RequestMapping("/app")
@@ -31,12 +33,9 @@ public class ComputerController {
 
     @GetMapping("/user/computerList")
     public String userComputerList(Model model, HttpSession session) {
-        model.addAttribute("repairs", repairDao.findUserRepairs(((User) session.getAttribute("user")).getId()));
         model.addAttribute("computers", computerDao.findUserComputers(((User) session.getAttribute("user")).getId()));
         return "user/computerList";
     }
-
-    /*  tutaj */
 
     @GetMapping("/user/computerAdd")
     public String userComputerAdd(Model model) {
@@ -49,6 +48,7 @@ public class ComputerController {
         if (result.hasErrors()) {
             return "user/computerAdd";
         }
+        computer.setStatus(1);
         if (computer.getId() != null) {
             computerDao.updateComputer(computer);
         } else {
@@ -68,14 +68,18 @@ public class ComputerController {
 
     @GetMapping("/user/computerDelete/{id}")
     public String userComputerDelete(@PathVariable long id) {
-        computerDao.deleteComputer(computerDao.findById(id));
-        return "redirect:/app/user/computerList";
-    }
-
-    @GetMapping("/user/computerAndRepairDelete/{rId}/{cId}")
-    public String userComputerAndRepairDelete(@PathVariable long cId, @PathVariable long rId) {
-        repairDao.deleteRepair(repairDao.findById(rId));
-        computerDao.deleteComputer(computerDao.findById(cId));
+        for (Repair repair : repairDao.findRepairsByComputerId(id)) {
+            if (repair.getStatus() == 1) {
+                repairDao.deleteRepair(repair);
+            }
+        }
+        if (repairDao.findRepairsByComputerId(id).isEmpty()) {
+            computerDao.deleteComputer(computerDao.findById(id));
+        } else {
+            Computer computer = computerDao.findById(id);
+            computer.setStatus(0);
+            computerDao.updateComputer(computer);
+        }
         return "redirect:/app/user/computerList";
     }
 }

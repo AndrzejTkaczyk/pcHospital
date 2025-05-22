@@ -13,41 +13,27 @@ public class Repair {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
-    @ManyToOne
-    @JoinColumn(name = "client_id")
-    private User client;
-
-    @OneToOne
-    private Computer computer;
-
-//    @ManyToOne
-//    @JoinColumn(name = "employee_id")
-//    private User employee;
-
     @Column(name = "date_of_order")
     private LocalDateTime dateOfOrder;
-
     private String descriptionOfTheProblem;
     private int status;
-
     @Column(name = "date_of_end")
     private LocalDateTime dateOfEnd;
-
+    @ManyToOne
+    private Computer computer;
     @OneToMany(mappedBy = "repair")
-    private Set<RepairDetails> repairDetails = new HashSet<>();
+    private List<RepairDetails> repairDetails = new ArrayList<>();
 
     public Repair() {
     }
 
-    public Repair(Long id, User client, Computer computer, LocalDateTime dateOfOrder, String descriptionOfTheProblem, int status, LocalDateTime dateOfEnd, Set<RepairDetails> repairDetails) {
+    public Repair(Long id, LocalDateTime dateOfOrder, String descriptionOfTheProblem, int status, LocalDateTime dateOfEnd, Computer computer, List<RepairDetails> repairDetails) {
         this.id = id;
-        this.client = client;
-        this.computer = computer;
         this.dateOfOrder = dateOfOrder;
         this.descriptionOfTheProblem = descriptionOfTheProblem;
         this.status = status;
         this.dateOfEnd = dateOfEnd;
+        this.computer = computer;
         this.repairDetails = repairDetails;
     }
 
@@ -57,22 +43,6 @@ public class Repair {
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public User getClient() {
-        return client;
-    }
-
-    public void setClient(User client) {
-        this.client = client;
-    }
-
-    public Computer getComputer() {
-        return computer;
-    }
-
-    public void setComputer(Computer computer) {
-        this.computer = computer;
     }
 
     public LocalDateTime getDateOfOrder() {
@@ -107,11 +77,30 @@ public class Repair {
         this.dateOfEnd = dateOfEnd;
     }
 
-    public Set<RepairDetails> getRepairDetails() {
+    public Computer getComputer() {
+        return computer;
+    }
+
+    public void setComputer(Computer computer) {
+        this.computer = computer;
+    }
+
+    public List<RepairDetails> getRepairDetails() {
         return repairDetails;
     }
 
-    public void setRepairDetails(Set<RepairDetails> repairDetails) {
+    public void setRepairDetails(List<RepairDetails> repairDetails) {
         this.repairDetails = repairDetails;
+    }
+
+    public String getDateOfOrderFormat() {
+        return dateOfOrder.getDayOfMonth() + "." + dateOfOrder.getMonthValue() + "." +dateOfOrder.getYear() + "r. godz. " + dateOfOrder.getHour() + ":" + dateOfOrder.getMinute();
+    }
+
+    public String getDateOfEndFormat() {
+        if (dateOfEnd == null) {
+            return "Nie ustalono";
+        }
+        return dateOfEnd.getDayOfMonth() + "." + dateOfEnd.getMonthValue() + "." +dateOfEnd.getYear() + "r. godz. " + dateOfEnd.getHour() + ":" + dateOfEnd.getMinute();
     }
 }

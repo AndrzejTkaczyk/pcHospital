@@ -35,6 +35,12 @@ public class RepairDetailsDao {
     }
 
     public List<RepairDetails> findRepairDetailsById(long id) {
+        return entityManager.createQuery("SELECT rd FROM RepairDetails rd WHERE rd.id= ?1", RepairDetails.class)
+                .setParameter(1, id)
+                .getResultList();
+    }
+
+    public List<RepairDetails> findRepairsDetailsByRepairId(long id) {
         return entityManager.createQuery("SELECT rd FROM RepairDetails rd WHERE rd.repair.id= ?1", RepairDetails.class)
                 .setParameter(1, id)
                 .getResultList();

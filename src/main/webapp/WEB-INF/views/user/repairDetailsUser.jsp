@@ -28,21 +28,21 @@
                     <table class="List">
                         <thead>
                         <tr>
+                            <th>Data naprawy</th>
                             <th>Szczegóły naprawy</th>
-                            <th>Kto naprawił</th>
+                            <th>Pracownik</th>
                             <th>Cena</th>
                         </tr>
                         </thead>
                         <tbody>
                         <c:set var="sum" value="0"/>
-                        <c:forEach items="${repairsDetails}" var="rd">
                             <tr>
-                                <td>${rd.descriptionOfRepair}</td>
-                                <td>${rd.employee.firstNameAndLastName}</td>
-                                <td>${rd.price}</td>
-                                <c:set var="sum" value="${sum + rd.price}"/>
+                                <td>${repairsDetails.repair.dateOfEndFormat}</td>
+                                <td>${repairsDetails.descriptionOfRepair}</td>
+                                <td>${repairsDetails.employee.firstNameAndLastName}</td>
+                                <td>${repairsDetails.price}</td>
+                                <c:set var="sum" value="${sum + repairsDetails.price}"/>
                             </tr>
-                        </c:forEach>
                         </tbody>
                     </table>
                     <table class="List">

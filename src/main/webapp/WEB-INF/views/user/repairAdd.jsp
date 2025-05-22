@@ -35,22 +35,10 @@
             </c:choose>
             <form:form modelAttribute="repair" method="post" action="/app/user/repairAdd">
                 <form:hidden path="id"/>
-                <c:if test="${repair.client != null}">
-                    <form:hidden path="client.id"/>
-                </c:if>
+                <form:hidden path="computer.id"/>
                 <label>
                     Opis problemu:<br><form:input type="text" path="descriptionOfTheProblem"/>
                     <p class="alert-danger"><form:errors path="descriptionOfTheProblem"/></p>
-                </label>
-                <label>
-                    <c:choose>
-                        <c:when test="${repair.id == null}">
-                            Komputer do naprawy: <br><form:select path="computer" items="${computers}" itemLabel="detailComputer" itemValue="id"/>
-                        </c:when>
-                        <c:otherwise>
-                            <form:hidden path="computer.id"/>
-                        </c:otherwise>
-                    </c:choose>
                 </label>
                 <br>
                 <button type="submit">Zapisz</button>

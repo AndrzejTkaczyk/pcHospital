@@ -14,6 +14,7 @@ import java.util.List;
 public class ComputerDao {
     @PersistenceContext
     private EntityManager entityManager;
+
     public void saveComputer(Computer computer) {
         entityManager.persist(computer);
     }
@@ -35,9 +36,8 @@ public class ComputerDao {
     }
 
     public List<Computer> findUserComputers(long id) {
-        return entityManager.createQuery("SELECT c FROM Computer c WHERE c.client.id= ?1", Computer.class)
+        return entityManager.createQuery("SELECT DISTINCT c FROM Computer c left join fetch c.repairs WHERE c.client.id= ?1 AND c.status !=0", Computer.class)
                 .setParameter(1, id)
                 .getResultList();
     }
-
 }

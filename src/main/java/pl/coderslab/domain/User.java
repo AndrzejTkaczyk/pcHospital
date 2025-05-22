@@ -52,6 +52,9 @@ public class User {
     }
 
     public String getFirstNameAndLastName () {
+        if (firstName.isEmpty() || lastName.isEmpty()) {
+            return "Nie ustalono";
+        }
         return firstName + " " + lastName;
     }
 

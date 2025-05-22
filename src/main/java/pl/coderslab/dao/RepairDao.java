@@ -35,15 +35,14 @@ public class RepairDao {
         return entityManager.createQuery("SELECT r FROM Repair r", Repair.class).getResultList();
     }
 
-    public List<Repair> findUserRepairs(long id) {
-        return entityManager.createQuery("SELECT r FROM Repair r WHERE r.client.id= ?1", Repair.class)
-                .setParameter(1, id)
+    public List<Repair> findAllRepairWithRepairDetails() {
+        return entityManager.createQuery("SELECT r FROM Repair r left join fetch r.repairDetails", Repair.class)
                 .getResultList();
     }
 
-    public int findRepairStatusByComputerId(long id) {
-        return entityManager.createQuery("SELECT r.status FROM Repair r WHERE r.computer.id= ?1 AND r.status==2", Repair.class)
+    public List<Repair> findRepairsByComputerId(long id) {
+        return entityManager.createQuery("SELECT r FROM Repair r WHERE r.computer.id=?1", Repair.class)
                 .setParameter(1, id)
-                .getFirstResult();
+                .getResultList();
     }
 }

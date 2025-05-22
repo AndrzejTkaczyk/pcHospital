@@ -11,7 +11,6 @@ public class Role {
     private String position;
 
     public Role () {
-
     }
 
     public Role(Long id, String position) {

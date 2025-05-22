@@ -32,7 +32,6 @@
                             <th>Cena</th>
                             <th>Status</th>
                             <th>Id naprawy</th>
-                            <th>Akcje</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -42,29 +41,29 @@
                                 <td>${rd.descriptionOfRepair}</td>
                                 <td>${rd.price}</td>
                                 <td>
-                                    <c:if test="${rd.status == 0}">
+                                    <c:if test="${rd.status == 1}">
                                         Oczekuje na naprawę
                                     </c:if>
-                                    <c:if test="${rd.status == 1}">
+                                    <c:if test="${rd.status == 2}">
                                         W trakcie naprawy
                                     </c:if>
-                                    <c:if test="${rd.status == 2}">
+                                    <c:if test="${rd.status == 3}">
                                         Naprawiony
                                     </c:if></td>
                                 <td>${rd.id}</td>
                                 <td>
-                                    <c:if test="${rd.repair.id == 0}">
+                                    <c:if test="${rd.repair.id == 1}">
                                         Oczekuje na naprawę
                                         <a href="/app/employee/repairAddEmployee/${rd.repair.id}">Podejmij naprawę</a>
                                         <a href="/app/employee/repairDetailsEmployee/${rd.repair.id}">Szczegóły</a>
                                     </c:if>
-                                    <c:if test="${rd.repair.id == 1}">
+                                    <c:if test="${rd.repair.id == 2}">
                                         W trakcie naprawy
                                         <a href="/app/employee/repairEditEmployeeRepair/${rd.repair.id}">Edytuj naprawę</a>
                                         <a href="/app/employee/repairDetailsEmployee/${rd.repair.id}">Szczegóły</a>
                                         <a href="/app/employee/repairEnd/${rd.repair.id}">Zakoncz</a>
                                     </c:if>
-                                    <c:if test="${rd.repair.id == 2}">
+                                    <c:if test="${rd.repair.id == 3}">
                                         Zakończono naprawę <a href="/app/employee/repairDetailsEmployee/${rd.repair.id}">Szczegóły</a>
                                     </c:if>
 

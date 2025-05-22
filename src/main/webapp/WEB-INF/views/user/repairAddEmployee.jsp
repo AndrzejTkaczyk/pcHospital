@@ -41,8 +41,8 @@
             </c:if>
             <label>
                 Status:<br><form:select path="status">
-                <form:option value="1" label="Rozpocznij naprawę"/>
-                <form:option value="2" label="Zakończ naprawę"/>
+                <form:option value="2" label="Rozpocznij naprawę"/>
+                <form:option value="3" label="Zakończ naprawę"/>
             </form:select>
                 <p class="alert-danger"><form:errors path="status"/></p>
             </label>
@@ -51,7 +51,6 @@
                     Opis naprawy:<br><form:input type="text" path="descriptionOfRepair"/>
                     <p class="alert-danger"><form:errors path="descriptionOfRepair"/></p>
                 </label>
-
                 <label>
                     Cena:<br><form:input type="number" path="price"/>
                     <p class="alert-danger"><form:errors path="price"/></p>

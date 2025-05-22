@@ -32,31 +32,36 @@
                             <th>Data zgłoszenia</th>
                             <th>Opis problemu</th>
                             <th>Dotyczy komputera</th>
+                            <th>Pracownik</th>
                             <th>Akcje i status</th>
                         </tr>
                         </thead>
                         <tbody>
-                        <c:forEach items="${repairs}" var="r">
+                        <c:forEach items="${repairs}" var="repair">
                             <tr>
-                                <td>${r.id}</td>
-                                <td>${r.client.firstNameAndLastName}</td>
-                                <td>${r.dateOfOrder}</td>
-                                <td>${r.descriptionOfTheProblem}</td>
-                                <td>${r.computer.detailComputer}</td>
+                                <td>${repair.id}</td>
+                                <td>${repair.computer.client.firstNameAndLastName}</td>
+                                <td>${repair.dateOfOrderFormat}</td>
+                                <td>${repair.descriptionOfTheProblem}</td>
+                                <td>${repair.computer.detailComputer}</td>
                                 <td>
-                                    <c:if test="${r.status == 0}">
+                                    <c:forEach items="${repair.repairDetails}" var="repairDetails">
+                                        ${repairDetails.employee.firstNameAndLastName}
+                                    </c:forEach>
+                                </td>
+                                <td>
+                                    <c:if test="${repair.status == 1}">
                                         Oczekuje na naprawę
-                                        <a href="/app/employee/repairAddEmployee/${r.id}">Podejmij naprawę</a>
-                                        <a href="/app/employee/repairDetailsEmployee/${r.id}">Szczegóły</a>
+                                        <a href="/app/employee/repairAddEmployee/${repair.id}">Podejmij naprawę</a>
+                                        <a href="/app/employee/repairDetailsEmployee/${repair.id}">Szczegóły</a>
                                     </c:if>
-                                    <c:if test="${r.status == 1}">
+                                    <c:if test="${repair.status == 2}">
                                         W trakcie naprawy
-                                        <a href="/app/employee/repairEditEmployeeRepair/${r.id}">Edytuj naprawę</a>
-                                        <a href="/app/employee/repairDetailsEmployee/${r.id}">Szczegóły</a>
-                                        <a href="/app/employee/repairEnd/${r.id}">Zakoncz</a>
+                                        <a href="/app/employee/repairEditEmployeeRepair/${repair.id}">Edytuj naprawę</a>
+                                        <a href="/app/employee/repairDetailsEmployee/${repair.id}">Szczegóły</a>
                                     </c:if>
-                                    <c:if test="${r.status == 2}">
-                                        Zakończono naprawę <a href="/app/employee/repairDetailsEmployee/${r.id}">Szczegóły</a>
+                                    <c:if test="${repair.status == 3}">
+                                        Zakończono naprawę <a href="/app/employee/repairDetailsEmployee/${repair.id}">Szczegóły</a>
                                     </c:if>
                                 </td>
                             </tr>

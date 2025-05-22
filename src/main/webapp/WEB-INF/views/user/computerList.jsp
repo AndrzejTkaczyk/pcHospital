@@ -24,7 +24,8 @@
                     Lista jest pusta!
                 </c:when>
                 <c:otherwise>
-                    <table class="List">
+                    <c:forEach items="${computers}" var="computer">
+                        <table class="List">
                         <thead>
                         <tr>
                             <th>Id</th>
@@ -36,33 +37,86 @@
                         </tr>
                         </thead>
                         <tbody>
-                        <c:forEach items="${computers}" var="c">
-                            <tr>
-                                <td>${c.id}</td>
-                                <td>${c.brand}</td>
-                                <td>${c.model}</td>
-                                <td>${c.serial_number}</td>
-                                <td>${c.type}</td>
-                                <td>
-                                    <c:forEach items="${repairs}" var="r" varStatus="repairLoop">
-                                        <c:if test="${c.id != r.computer.id}">
-                                            <a href="/app/user/computerEdit/${c.id}">Edytuj</a>
-                                            <a href="/app/user/computerDelete/${c.id}">Usuń</a>
-                                        </c:if>
-                                        <c:if test="${c.id == r.computer.id && r.status==1}">
-                                            <a href="/app/user/computerEdit/${c.id}">Edytuj</a>
-                                            <a href="/app/user/computerDelete/${c.id}">Usuń</a>
-                                            Oczekuje na przyjęcie naprawy.
-                                        </c:if>
-                                        <c:if test="${c.id == r.computer.id && r.status==2}">
-                                            Przyjęty do naprawy.
-                                        </c:if>
+                        <tr>
+                            <td>${computer.id}</td>
+                            <td>${computer.brand}</td>
+                            <td>${computer.model}</td>
+                            <td>${computer.serial_number}</td>
+                            <td>${computer.type}</td>
+                            <td>
+                                <c:if test="${computer.status == 1}">
+                                    <a href="/app/user/computerEdit/${computer.id}">Edytuj</a>
+                                    <a href="/app/user/computerDelete/${computer.id}">Usuń</a>
+                                </c:if>
+                                <c:if test="${computer.status == 2}">
+                                    W trakcie naprawy
+                                </c:if>
+                                <c:if test="${computer.status == 3}">
+                                    <a href="/app/user/computerDelete/${computer.id}">Usuń</a>
+                                </c:if>
+                            </td>
+                        </tr>
 
-                                    </c:forEach>
-                                </td>
-                            </tr>
-                        </c:forEach>
-                        </tbody>
+                        <c:choose>
+                            <c:when test="${empty computer.repairs}">
+                                <tr>
+                                    <th colspan="6">Lista napraw jest pusta.
+                                    </th>
+                                </tr>
+                                <tr>
+                                    <th colspan="6"><a href="<c:url value="/app/user/repairAdd/${computer.id}"/>">Dodaj
+                                        naprawę</a>
+                                    </th>
+                                </tr>
+                            </c:when>
+                            <c:otherwise>
+                                <thead>
+                                <tr>
+                                    <th colspan="6">Lista napraw:
+                                    </th>
+                                </tr>
+                                <tr>
+                                    <th>Id</th>
+                                    <th>Data zgłoszenia</th>
+                                    <th>Data naprawy</th>
+                                    <th>Problem</th>
+                                    <th colspan="2">Akcje</th>
+                                </tr>
+                                </thead>
+
+                                <c:forEach items="${computer.repairs}" var="computerRepairs">
+                                    <tr>
+                                        <td>${computerRepairs.id}</td>
+                                        <td>${computerRepairs.dateOfOrderFormat}</td>
+                                        <td>${computerRepairs.dateOfEndFormat}</td>
+                                        <td>${computerRepairs.descriptionOfTheProblem}</td>
+                                        <td colspan="2">
+                                            <c:if test="${computerRepairs.status == 1}">
+                                                <a href="/app/user/repairEdit/${computerRepairs.id}">Edytuj</a>
+                                                <a href="/app/user/repairDelete/${computerRepairs.id}">Usuń</a>
+                                                Oczekuje na przyjęcie naprawy.
+                                            </c:if>
+                                            <c:if test="${computerRepairs.status == 2}">
+                                                W trakcie naprawy.
+                                            </c:if>
+                                            <c:if test="${computerRepairs.status == 3}">
+                                                Naprawiono. <a href="/app/user/repairDetailsUser/${computerRepairs.id}">Szczegóły</a>
+                                            </c:if>
+                                        </td>
+                                    </tr>
+                                </c:forEach>
+                                <tr>
+                                    <c:if test="${computer.status == 1 || computer.status == 3}">
+                                        <th colspan="6"><a href="<c:url value="/app/user/repairAdd/${computer.id}"/>">Dodaj
+                                            kolejną naprawę</a>
+                                        </th>
+                                    </c:if>
+                                </tr>
+                            </c:otherwise>
+                        </c:choose>
+
+                    </c:forEach>
+                    </tbody>
                     </table>
                 </c:otherwise>
             </c:choose>

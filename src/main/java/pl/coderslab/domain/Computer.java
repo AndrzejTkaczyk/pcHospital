@@ -1,6 +1,10 @@
 package pl.coderslab.domain;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "computers")
@@ -8,30 +12,28 @@ public class Computer {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @ManyToOne
-    private User client;
     private String type;
     private String brand;
     private String model;
     private int serial_number;
     private int status;
+    @ManyToOne
+    private User client;
+    @OneToMany(mappedBy = "computer")
+    private List<Repair> repairs = new ArrayList<>();
 
-    public Computer(int status) {
-        this.status = status;
+    public Computer() {
     }
 
-    public Computer(Long id, User client, String type, String brand, String model, int serial_number, int status) {
+    public Computer(Long id, String type, String brand, String model, int serial_number, int status, User client, List<Repair> repairs) {
         this.id = id;
-        this.client = client;
         this.type = type;
         this.brand = brand;
         this.model = model;
         this.serial_number = serial_number;
         this.status = status;
-    }
-
-    public Computer() {
-
+        this.client = client;
+        this.repairs = repairs;
     }
 
     public Long getId() {
@@ -40,14 +42,6 @@ public class Computer {
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public User getClient() {
-        return client;
-    }
-
-    public void setClient(User client) {
-        this.client = client;
     }
 
     public String getType() {
@@ -88,6 +82,22 @@ public class Computer {
 
     public void setStatus(int status) {
         this.status = status;
+    }
+
+    public User getClient() {
+        return client;
+    }
+
+    public void setClient(User client) {
+        this.client = client;
+    }
+
+    public List<Repair> getRepairs() {
+        return repairs;
+    }
+
+    public void setRepairs(List<Repair> repairs) {
+        this.repairs = repairs;
     }
 
     public String getDetailComputer() {

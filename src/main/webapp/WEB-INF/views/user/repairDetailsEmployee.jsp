@@ -18,7 +18,7 @@
 <table class="mainTable">
     <tr>
         <td>
-            <h1>Szczegóły komputera do naprawy</h1>
+            <h1>Szczegóły naprawy</h1>
             <c:choose>
                 <c:when test="${empty repairsDetails}">
                     Lista jest pusta!
@@ -31,7 +31,7 @@
                             <th>Szczegóły naprawy</th>
                             <th>Cena</th>
                             <th>Status</th>
-                            <th>Kto naprawia</th>
+                            <th>Pracownik</th>
                             <th>Id naprawy</th>
                         </tr>
                         </thead>
@@ -42,13 +42,13 @@
                                 <td>${rd.descriptionOfRepair}</td>
                                 <td>${rd.price}</td>
                                 <td>
-                                <c:if test="${rd.status == 0}">
+                                <c:if test="${rd.status == 1}">
                                     Oczekuje na naprawę
                                 </c:if>
-                                <c:if test="${rd.status == 1}">
+                                <c:if test="${rd.status == 2}">
                                     W trakcie naprawy
                                 </c:if>
-                                <c:if test="${rd.status == 2}">
+                                <c:if test="${rd.status == 3}">
                                     Naprawiony
                                 </c:if></td>
                                 <td>${rd.employee.firstNameAndLastName}</td>
